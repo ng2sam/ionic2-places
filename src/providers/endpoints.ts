@@ -13,4 +13,8 @@ getSignup(): string {
   return this.API_PATH + '/users';
 }
 
+getPlaces(): string {
+  return this.API_PATH + '/places';
+}
+
 }

@@ -12,5 +12,13 @@
 
 
 <ion-content padding>
-
+<ion-list *ngFor="let p of places | async">
+  <ion-item>
+    <ion-avatar item-left>
+      <img src="{{p.image}}">
+    </ion-avatar>
+    <h2>{{p.name}}</h2>
+    <p>{{p.description}}</p>
+  </ion-item>
+</ion-list>
 </ion-content>

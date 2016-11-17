@@ -4,9 +4,11 @@ import { MyApp } from './app.component';
 import { HeaderContentComponent } from '../components/header-content/header-content';
 import { Routes } from './app.routes';
 import {AuthHttp, AuthConfig } from 'angular2-jwt';
-import { Http } from '@angular/Http';
+import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
-
+import { Auth } from '../providers/auth';
+import { Endpoints } from '../providers/endpoints';
+import { Places } from '../providers/places';
 
 const app:Array<any>=[MyApp];
 const pages:Array<any> = Routes.getPages();
@@ -22,14 +24,16 @@ const appIonicConfig = {
   }
 };
 let storage = new Storage();
-export function getAuthHttp(Http) {
+
+export function getAuthHttp(http) {
   return new AuthHttp(new AuthConfig({
-    headerPrefix: 'jwt',
+    // headerPrefix: YOUR_HEADER_PREFIX,
     noJwtError: false,
-   globalHeaders:[{'accepte':'application/json'}],
-   tokenGetter: (()=>storage.get('id_token')),
-  }), Http);
+    globalHeaders: [{'Accept': 'application/json'}],
+    tokenGetter: (() => storage.get('id_token')),
+  }), http);
 }
+
 @NgModule({
   declarations: app.concat(pages).concat(components),
   imports: [
@@ -41,6 +45,10 @@ export function getAuthHttp(Http) {
     provide : AuthHttp,
     useFactory: getAuthHttp,
     deps:[Http]
-  }]
+  },
+  Auth,
+  Endpoints,
+  Places
+  ]
 })
 export class AppModule {}
