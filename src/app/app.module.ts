@@ -6,9 +6,11 @@ import { Routes } from './app.routes';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
-import {Endpoints} from '../providers/endpoints'
-import {Auth} from '../providers/auth'
+import {Endpoints} from '../providers/endpoints';
+import {Auth} from '../providers/auth';
 import {Map} from '../components/map/map';
+import { SorteAsc } from '../pipes/sorteAsc';
+import { GroupeBy } from '../pipes/groupeBy';
 
 const app:Array<any>=[MyApp];
 const pages:Array<any> = Routes.getPages();
@@ -16,6 +18,10 @@ const components:Array<any> = [
   HeaderContentComponent,
   Map,
 ];
+const pipes: any[] = [
+  SorteAsc,
+  GroupeBy
+]
 const appIonicConfig = {
   mode: 'md',
   platforms: {
@@ -37,7 +43,7 @@ export function getAuthHttp(http) {
 }
 
 @NgModule({
-  declarations: app.concat(pages).concat(components),
+  declarations: app.concat(pages).concat(components).concat(pipes),
   imports: [
     IonicModule.forRoot(MyApp,appIonicConfig, Routes.getDeepLinkerConfig())
   ],
@@ -48,7 +54,7 @@ export function getAuthHttp(http) {
      deps: [Http]
    },
    Endpoints,
-   Auth,
+   Auth
   ],
   bootstrap: [IonicApp],
   entryComponents: app.concat(pages),

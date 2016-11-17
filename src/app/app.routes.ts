@@ -38,7 +38,7 @@ export class Routes {
   }
 
   static getRootPage(authenticated){
-    let root = (authenticated) ? Routes.getPage(Routes.TABS) : Routes.getPage(Routes.HOME);
+    let root = !(authenticated) ? Routes.getPage(Routes.TABS) : Routes.getPage(Routes.HOME);
     return root;
   }
 
